@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Admission Portal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 32px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4);
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 1.6rem;
+            text-align: center;
+            color: #38bdf8;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: #f8fafc;
+            font-size: 1rem;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #38bdf8;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #38bdf8;
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #0284c7;
+            color: #ffffff;
+        }
+        .alert {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Student Admission Portal</h1>
+        <p class="subtitle">Enter your PU percentage and select a course</p>
+
+        <form method="POST">
+            <label for="student_name">Full Name</label>
+            <input type="text" id="student_name" name="student_name" placeholder="Enter student name" required>
+
+            <label for="pu_percentage">PU Percentage (%)</label>
+            <input type="number" step="0.01" min="0" max="100" id="pu_percentage" name="pu_percentage" placeholder="e.g. 75.5" required>
+
+            <label for="course">Select Course</label>
+            <select id="course" name="course" required>
+                <option value="" disabled selected>-- Choose a Course --</option>
+                {% for course_name, count in seats.items() %}
+                    <option value="{{ course_name }}">
+                        {{ course_name }} ({{ count }} seats left)
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Apply for Admission</button>
+        </form>
+
+        {% if message %}
+            <div class="alert {{ status }}">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
